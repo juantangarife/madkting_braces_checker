@@ -22,15 +22,19 @@ def _check_string(s):
     else:
         opener = s[0]
         if opener in dict_openers:
-            closer_char = dict_openers[opener]
-            first_closer_index = s.find(closer_char)
-            if first_closer_index >= 0:
-                prov = list(s)
-                prov[0] = ''
-                prov[first_closer_index] = ''
-                return _check_string(''.join(prov))
+            next_char = s[1]
+            if next_char == dict_openers[opener]:
+                return _check_string(s[2:])
             else:
-                return 0
+                closer_char = dict_openers[opener]
+                last_closer_index = s.rfind(closer_char)
+                if last_closer_index >= 0:
+                    prov = list(s)
+                    prov[0] = ''
+                    prov[last_closer_index] = ''
+                    return _check_string(''.join(prov))
+                else:
+                    return 0
         else:
             return 0
 
@@ -38,7 +42,8 @@ def _check_string(s):
 if __name__ == '__main__':
     test_input = [
         '{(})([]}',
-        '{}()[]',
-        '{({}[])}'
+        '{}()[]{}',
+        '{({}[])}',
+        '{()}[]'
     ]
     braces_checker(test_input)

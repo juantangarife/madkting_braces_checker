@@ -7,7 +7,14 @@ dict_openers = {
 
 def braces_checker(strings_array):
     for s in strings_array:
-        print(_check_string(s))
+        pairs = ['()', '{}', '[]']
+        for p in pairs:
+            if p in s:
+                s = s.replace(p, '')
+        if len(s) > 0:
+            print(_check_string(s))
+        else:
+            print(1)
 
 
 def _check_string(s):
@@ -44,6 +51,18 @@ if __name__ == '__main__':
         '{(})([]}',
         '{}()[]{}',
         '{({}[])}',
-        '{()}[]'
+        '{()}[]',
+
+        '[[]][[]]]]',
+        '][]][[][][',
+        '[][]]][[[]',
+        '][][[[][[]',
+        '[[[][]]]',
+        '][][]][[[[',
+        '][][[[[]][',
+        '][[][]][[]',
+        '[[]][[]][]',
+        '[][]]][]]]',
+
     ]
     braces_checker(test_input)
